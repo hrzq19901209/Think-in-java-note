@@ -26,4 +26,8 @@ public      1      1       1        1
 protected   1      1       1        0
 default     1      1       0        0
 private     1      0       0        0
+静态方法和属性是可以被继承的，但是不能被重写，不能实现多态。
+
+
+
 

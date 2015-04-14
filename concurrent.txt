@@ -3,3 +3,69 @@ Java的线程机制是抢占式的。
 这些机制在创建分布式系统时是更主要的方式。
 线程能够创建更加松耦合的设计，否则，你的代码中各个部分都必须显示地关注那些通常可以由线程来处理的
 任务。
+这是一道Java面试题：try?{?}里有一个return语句，那么紧跟在这个try后的finally?{}里的code会不会被执行，什么时候被执行，
+在return前还是后?(如果try后面有个catch块，里面有return语句，那么finally语句会不会执行？)?
+finally语句块的作用就是为了保证无论出现什么情况，一定要执行的，那么finally里的code肯定会执行，
+并且是在return前执行。（只要语句执行了，肯定是在return前执行的。?finally中也可以有return，并且会覆盖其他的return
+
+子类若遵循以下原则便可以继承父类的构造函数。⑴ 如果子类自己没有构造函数，则它可以无条件地继承父类不含参数的构造函数，
+作为自己的构造函数； ⑵如果子类自己定义了构造函数，则在创建新对象时，它将先执行继承自父类不含参数的构造函数，然后再执
+行自己的构造函数；⑶ 对于父类含参数的构造函数，子类可以通过在自己的构造函数中使用关键字 super 来调用它，但是这个调用
+语句必须是子类构造函数的第一个可执行语句。
+
+java的静态方法和静态属性可以被继承，但是不能被重写。
+final修饰的方法是不能在不继承的。但是属性是可以被继承的。
+
+在Android开发的时候经常会用到匿名内部类，比如
+btn.setOnclickListener(new OnClickListener(){
+	/********/
+});
+但是匿名内部类需要额外的参数的话，我们可以直接在匿名内部类中
+引用外部变量，但次变量必须是final的。
+我们可以这样做。
+public OnClickListener oc(final String name){
+	return new OnClickListener(){
+		/********/
+		/*在这里可以使用参数name-*
+	};
+}
+btn.setOnclickListener(oc("nima"));
+
+传给匿名内部类的参数必须是final
+
+在匿名内部类中使用的外部变量必须是final的。
+
+throws用在函数头处，列出函数可以抛出的异常。
+throw出现在函数体中，用于抛出具体的异常，如throw new 异常类();并且函数之后的语句将不再执行，控制权交给异常类。
+Throws: Lists the exceptions a method could throw.  
+Throw: Transfers control of the method to the exception handler.  
+
+java的释放模式
+OutputStream out = null;
+try{
+	out = new OutputStream("aa.txt");
+	/********/
+}catch(IOException e){
+	e.printStackTrace();
+}finally{
+	if(out != null){
+		try{
+			out.close();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+}
+
+带资源的try
+try(OutputStream out = new OutputStream("aa.txt")){
+	/********/
+}catch(IOException e){
+	e.printStackTrace();
+}
+
+这里，只要对象实现了closable接口，就可以使用带资源的try，
+这是不需要finally主动释放资源，在这里对象会自动调用close()
+
+OutputStream不仅实现了Closable还实现了Flushable接口
+InputStream只实现了Closable接口
